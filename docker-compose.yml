@@ -1,0 +1,33 @@
+﻿version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: postgres_db
+    environment:
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
+      POSTGRES_DB: mydb
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  app:
+    build: .
+    container_name: nextjs_app
+    ports:
+      - '3000:3000'
+    environment:
+      DATABASE_URL: "postgresql://myuser:mypassword@postgres:5432/mydb"
+      NEXT_PUBLIC_CLERK_FRONTEND_API: ""
+      NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: ""
+      CLERK_SECRET_KEY: ""
+    depends_on:
+      - postgres
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+
+volumes:
+  postgres_data:
