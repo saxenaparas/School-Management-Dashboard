@@ -14,6 +14,10 @@ const StudentPage = async () => {
     },
   });
 
+  if (!classItem.length) {
+    return <div>No class found for this student.</div>;
+  }
+
   console.log(classItem);
   return (
     <div className="p-4 flex gap-4 flex-col xl:flex-row">
