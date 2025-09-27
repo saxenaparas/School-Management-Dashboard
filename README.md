@@ -249,32 +249,9 @@ $env:DATABASE_URL="postgresql://myuser:mypassword@localhost:5432/mydb?schema=pub
   - Remove migration step from Dockerfile; run migrations in container at runtime.
 
 ---
-
-## 🧾 Dev Preflight Checklist (copy-paste)
-
-```bash
-# 1. Build and start containers
-docker compose up -d --build
-
-# 2. Wait for Postgres
-docker logs $(docker ps --filter "name=postgres" -q) --tail 50
-
-# 3. If running Next on host, set DB URL for this terminal:
-# PowerShell:
-$env:DATABASE_URL="postgresql://myuser:mypassword@localhost:5432/mydb?schema=public"
-
-# 4. Prisma + seed
-npx prisma generate
-npx prisma db push
-node prisma/build/seed.js
-
-# 5. Start Next (host)
-npm run dev
-```
-
 ---
 
-## **</>** Setup Summary
+## 🧾**</>** Dev Preflight Checklist [Setup-Summary] (copy-paste)
 
 ### Follow the steps in order below to set up and run the project exactly as executed in the terminal:
 
@@ -291,8 +268,9 @@ npm i
 # Build and run Docker containers
 docker compose up -d --build
 
-# Check running containers
+# Check running containers and Postgres
 docker ps
+docker logs $(docker ps --filter "name=postgres" -q) --tail 50
 
 # Host Network Reachability (when running Next.js on host):
 # On PowerShell (Windows)
@@ -317,31 +295,11 @@ npm run dev
 
 ---
 ---
----
-
-
-<!-- 
-
-## 📹 Demo Video
-
-Full walkthrough: [YouTube Video](https://youtu.be/6sfiAyKy8Jo?si=7fMZFfT9I1bSyZ_a)
-
----
-
-## 📝 Git Commit Example
-
-```bash
-git add .
-git commit -m "fix: resolve docker-compose and dependency issues, add middleware and test setup"
-git push origin main
-```
-
----
 
 ## 👨‍💻 Author
 
-- **Paras Saxena** — Full-Stack Developer | DevOps Enthusiast
+- [**Paras Saxena**](https://saxenaparas.vercel.app/) — Full-Stack Developer | DevOps Enthusiast
 
 --- 
-
--->
+---
+---
