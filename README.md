@@ -251,7 +251,7 @@ $env:DATABASE_URL="postgresql://myuser:mypassword@localhost:5432/mydb?schema=pub
 ---
 ---
 
-## 🧾**</>** Dev Preflight Checklist [Setup-Summary] (copy-paste)
+## 🧾 **</>**  Dev Preflight Checklist [Setup-Summary] (copy-paste)
 
 ### Follow the steps in order below to set up and run the project exactly as executed in the terminal:
 
