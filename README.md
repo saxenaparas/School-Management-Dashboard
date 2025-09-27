@@ -1,6 +1,7 @@
 # Full-Stack School Management System
 
-A **Next.js + Prisma + PostgreSQL** based school management system with Docker support.  
+> A **Next.js + Prisma + PostgreSQL** based School Management System with Docker support.  
+
 This project implements role-based dashboards for **Admin, Teacher, Student, and Parent**, with complete data management (announcements, assignments, attendance, classes, exams, results, etc.).
 
 ---
@@ -206,6 +207,7 @@ nc -zv localhost 5432
 ### D. Prisma connectivity
 
 Ensure terminal uses correct `DATABASE_URL` (host or container) before running:
+> ⚠ If direct Prisma commands fail to connect to DB, then also use this environment variable command.
 
 ```powershell
 $env:DATABASE_URL="postgresql://myuser:mypassword@localhost:5432/mydb?schema=public"
@@ -222,7 +224,7 @@ node prisma/build/seed.js
 $env:DATABASE_URL="postgresql://myuser:mypassword@localhost:5432/mydb?schema=public"; node -e "const {PrismaClient}=require('@prisma/client');(async()=>{const p=new PrismaClient();console.log('admins:', await p.admin.count());await p.$disconnect();})()"
 ```
 
-Expect numeric output like `admins: 1`.
+> Expect numeric output like `admins: 1`.
 
 ### F. Browser checks
 
@@ -270,6 +272,51 @@ node prisma/build/seed.js
 npm run dev
 ```
 
+---
+
+## **</>** Setup Summary
+
+### Follow the steps in order below to set up and run the project exactly as executed in the terminal:
+
+> First, check your `.env` file (ensure all environment variables are set) and the `Clerk Authentication and Configuration` (as mentioned above), then execute these commands in order.
+
+```powershell
+# Check Node.js and npm versions
+node -v
+npm -v
+
+# Install dependencies
+npm i
+
+# Build and run Docker containers
+docker compose up -d --build
+
+# Check running containers
+docker ps
+
+# Host Network Reachability (when running Next.js on host):
+# On PowerShell (Windows)
+Test-NetConnection -ComputerName localhost -Port 5432
+# Expect: TcpTestSucceeded : True
+# On macOS/Linux
+# nc -zv localhost 5432
+# expect "succeeded"
+
+# Generate Prisma client and apply schema: (If direct Prisma commands fail to connect to DB, use the environment variable command)
+$env:DATABASE_URL="postgresql://myuser:mypassword@localhost:5432/mydb?schema=public"
+npx prisma generate
+npx prisma db push
+
+# Compile and run seed: (compile TS seed to JS and then, run compiled seed)
+npx tsc prisma/seed.ts --outDir prisma/build --module CommonJS --target ES2020
+node prisma/build/seed.js
+
+# Start development server
+npm run dev
+```
+
+---
+---
 ---
 
 
